@@ -1,0 +1,211 @@
+"use client";
+
+import type React from "react";
+
+import { useEffect, useState } from "react";
+import { useUser } from "@clerk/nextjs";
+import { createCheck } from "@/lib/supabase-client";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Loader2, Globe, Clock } from "lucide-react";
+
+type Check = {
+  id: string;
+  url: string;
+  name: string;
+  interval_minutes: number;
+  status: string;
+};
+
+export default function DashboardPage() {
+  const { user } = useUser();
+  const [checks, setChecks] = useState<Check[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    url: "",
+    interval: 10,
+  });
+
+  useEffect(() => {
+    if (!user) return;
+    fetch(`/api/get-checks?userId=${user.id}`)
+      .then((res) => res.json())
+      .then(setChecks);
+  }, [user]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!user) return;
+    setLoading(true);
+    try {
+      await createCheck({
+        userId: user.id,
+        name: form.name,
+        url: form.url,
+        interval_minutes: form.interval,
+      });
+      setForm({ name: "", url: "", interval: 10 });
+      const res = await fetch(`/api/get-checks?userId=${user.id}`);
+      const data = await res.json();
+      setChecks(data);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //   const getStatusVariant = (status: string) => {
+  //     switch (status) {
+  //       case "online":
+  //         return "default";
+  //       case "offline":
+  //         return "destructive";
+  //       default:
+  //         return "secondary";
+  //     }
+  //   };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "online":
+        return "bg-green-100 text-green-700 hover:bg-green-100";
+      case "offline":
+        return "bg-red-100 text-red-700 hover:bg-red-100";
+      default:
+        return "bg-gray-100 text-gray-700 hover:bg-gray-100";
+    }
+  };
+
+  return (
+    <div className="container mx-auto p-6 max-w-4xl">
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Website Monitoring
+          </h1>
+          <p className="text-muted-foreground">
+            Monitor your websites and get notified when they go down
+          </p>
+        </div>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>Add New Check</CardTitle>
+            <CardDescription>
+              Create a new website monitoring check
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="name">Website Name</Label>
+                  <Input
+                    id="name"
+                    type="text"
+                    placeholder="My Website"
+                    value={form.name}
+                    onChange={(e) => setForm({ ...form, name: e.target.value })}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="url">Website URL</Label>
+                  <Input
+                    id="url"
+                    type="url"
+                    placeholder="https://example.com"
+                    value={form.url}
+                    onChange={(e) => setForm({ ...form, url: e.target.value })}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="interval">Check Interval (minutes)</Label>
+                <Input
+                  id="interval"
+                  type="number"
+                  min={1}
+                  placeholder="10"
+                  value={form.interval}
+                  onChange={(e) =>
+                    setForm({ ...form, interval: Number(e.target.value) })
+                  }
+                  className="w-full md:w-48"
+                  required
+                />
+              </div>
+              <Button type="submit" disabled={loading}>
+                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                {loading ? "Adding Check..." : "Add Check"}
+              </Button>
+            </form>
+          </CardContent>
+        </Card>
+
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-2xl font-semibold tracking-tight">
+              Your Checks
+            </h2>
+            <Badge variant="outline">{checks.length} total</Badge>
+          </div>
+
+          {checks.length === 0 ? (
+            <Card>
+              <CardContent className="flex flex-col items-center justify-center py-12">
+                <Globe className="h-12 w-12 text-muted-foreground mb-4" />
+                <h3 className="text-lg font-semibold mb-2">No checks yet</h3>
+                <p className="text-muted-foreground text-center">
+                  Add your first website check to start monitoring
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <div className="grid gap-4">
+              {checks.map((check) => (
+                <Card key={check.id}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between">
+                      <div className="space-y-1 flex-1">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-semibold">{check.name}</h3>
+                          <Badge
+                            variant="outline"
+                            className={getStatusColor(check.status)}
+                          >
+                            {check.status}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground flex items-center gap-1">
+                          <Globe className="h-3 w-3" />
+                          {check.url}
+                        </p>
+                        <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <Clock className="h-3 w-3" />
+                          Checked every {check.interval_minutes} minutes
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
