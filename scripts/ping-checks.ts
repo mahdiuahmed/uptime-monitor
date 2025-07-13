@@ -21,34 +21,32 @@ async function main() {
   console.log(`Pinging ${checks.length} checks...`);
 
   for (const check of checks) {
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 8000); // 8-second timeout
+    console.log(`🔍 Pinging ${check.url}`);
+
+    const startTime = Date.now();
+    let isUp = false;
 
     try {
-      const res = await fetch(check.url, {
-        method: "GET",
-        signal: controller.signal,
-      });
-      clearTimeout(timeout);
+      const res = await fetch(check.url, { method: "GET" });
 
-      const newStatus = res.ok ? "online" : "offline";
-
-      await supabase
-        .from("checks")
-        .update({ status: newStatus })
-        .eq("id", check.id);
-
-      console.log(`${check.name}: ${newStatus}`);
-    } catch {
-      clearTimeout(timeout);
-
-      await supabase
-        .from("checks")
-        .update({ status: "offline" })
-        .eq("id", check.id);
-
-      console.log(`${check.name}: offline (timeout or error)`);
+      isUp = res.ok; // true if status is 2xx
+    } catch (error) {
+      console.error(`❌ Error pinging ${check.url}:`, error);
+      isUp = false;
     }
+
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+
+    // Update Supabase
+    await supabase
+      .from("checks")
+      .update({
+        last_ping_at: new Date().toISOString(),
+        last_duration_ms: duration,
+        status: isUp ? "online" : "offline",
+      })
+      .eq("id", check.id);
   }
 }
 

@@ -16,7 +16,16 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Globe, Clock } from "lucide-react";
+import { Loader2, Globe } from "lucide-react";
+
+// function StatusBadge({ status }: { status: string }) {
+//   const color = status === "online" ? "bg-green-500" : "bg-red-500";
+//   return (
+//     <Badge className={color + " text-white"}>
+//       {status === "online" ? "Online 🟢" : "Offline 🔴"}
+//     </Badge>
+//   );
+// }
 
 type Check = {
   id: string;
@@ -24,6 +33,8 @@ type Check = {
   name: string;
   interval_minutes: number;
   status: string;
+  last_duration_ms: number;
+  last_ping_at: Date;
 };
 
 export default function DashboardPage() {
@@ -35,6 +46,12 @@ export default function DashboardPage() {
     url: "",
     interval: 10,
   });
+
+  useEffect(() => {
+    if (!user) return;
+    // Call your create-profile API route
+    fetch("/api/create-profile", { method: "POST" });
+  }, [user]);
 
   useEffect(() => {
     if (!user) return;
@@ -76,16 +93,16 @@ export default function DashboardPage() {
   //     }
   //   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "online":
-        return "bg-green-100 text-green-700 hover:bg-green-100";
-      case "offline":
-        return "bg-red-100 text-red-700 hover:bg-red-100";
-      default:
-        return "bg-gray-100 text-gray-700 hover:bg-gray-100";
-    }
-  };
+  //   const getStatusColor = (status: string) => {
+  //     switch (status) {
+  //       case "online":
+  //         return "bg-green-100 text-green-700 hover:bg-green-100";
+  //       case "offline":
+  //         return "bg-red-100 text-red-700 hover:bg-red-100";
+  //       default:
+  //         return "bg-gray-100 text-gray-700 hover:bg-gray-100";
+  //     }
+  //   };
 
   return (
     <div className="container mx-auto p-6 max-w-4xl">
@@ -176,36 +193,66 @@ export default function DashboardPage() {
           ) : (
             <div className="grid gap-4">
               {checks.map((check) => (
-                <Card key={check.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-1 flex-1">
-                        <div className="flex items-center gap-2">
-                          <h3 className="font-semibold">{check.name}</h3>
-                          <Badge
-                            variant="outline"
-                            className={getStatusColor(check.status)}
-                          >
-                            {check.status}
-                          </Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground flex items-center gap-1">
-                          <Globe className="h-3 w-3" />
-                          {check.url}
-                        </p>
-                        <p className="text-xs text-muted-foreground flex items-center gap-1">
-                          <Clock className="h-3 w-3" />
-                          Checked every {check.interval_minutes} minutes
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
+                <div
+                  className="rounded-xl border p-4 shadow-sm space-y-2"
+                  key={check.id}
+                >
+                  <div className="flex justify-between items-center">
+                    <h2 className="text-lg font-semibold">{check.name}</h2>
+                    <StatusBadge status={check.status} />
+                  </div>
+                  <p className="text-sm text-muted-foreground">{check.url}</p>
+                  <p className="text-xs text-gray-500">
+                    Last checked:{" "}
+                    {check.last_ping_at
+                      ? new Date(check.last_ping_at).toLocaleString()
+                      : "Never"}
+                  </p>
+                  <p className="text-xs text-gray-500">
+                    Last response time: {check.last_duration_ms ?? "N/A"}
+                    ms
+                  </p>
+                </div>
+                // <Card key={check.id}>
+                //   <CardContent className="p-6">
+                //     <div className="flex items-center justify-between">
+                //       <div className="space-y-1 flex-1">
+                //         <div className="flex items-center gap-2">
+                //           <h3 className="font-semibold">{check.name}</h3>
+                //           <Badge
+                //             variant="outline"
+                //             className={getStatusColor(check.status)}
+                //           >
+                //             {check.status}
+                //           </Badge>
+                //         </div>
+                //         <p className="text-sm text-muted-foreground flex items-center gap-1">
+                //           <Globe className="h-3 w-3" />
+                //           {check.url}
+                //         </p>
+                //         <p className="text-xs text-muted-foreground flex items-center gap-1">
+                //           <Clock className="h-3 w-3" />
+                //           Checked every {check.interval_minutes} minutes
+                //         </p>
+                //       </div>
+
+                //     </div>
+                //   </CardContent>
+                // </Card>
               ))}
             </div>
           )}
         </div>
       </div>
     </div>
+  );
+}
+
+function StatusBadge({ status }: { status: string }) {
+  const color = status === "online" ? "bg-green-500" : "bg-red-500";
+  return (
+    <Badge className={color + " text-white"}>
+      {status === "online" ? "Online 🟢" : "Offline 🔴"}
+    </Badge>
   );
 }

@@ -18,6 +18,8 @@ export async function POST() {
     { onConflict: "id" } // this ensures "upsert" works on primary key
   );
 
+  console.log(error + "asdasdasd");
+
   //   if (error) {
   //     return NextResponse.json({ error: error.message }, { status: 400 });
   //   }
