@@ -1,0 +1,37 @@
+"use client";
+import { Activity, ArrowRight } from "lucide-react";
+import React from "react";
+import { UserButton, useUser } from "@clerk/nextjs";
+import Link from "next/link";
+import { Button } from "./ui/button";
+
+export default function Navbar() {
+  const { user } = useUser();
+
+  return (
+    <header className=" sticky top-0 z-50 border-b bg-background/50 backdrop-blur-sm">
+      <div className="p-8 flex h-16 items-center justify-between">
+        <div className="flex items-center space-x-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+            <Activity className="h-5 w-5" />
+          </div>
+          <Link href="/">
+            <span className="text-xl font-semibold text-foreground">
+              Uptime Monitor
+            </span>
+          </Link>
+        </div>
+        {!user ? (
+          <Button asChild>
+            <Link href="/dashboard" className="flex items-center gap-2">
+              Log into Dashboard
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </Button>
+        ) : (
+          <UserButton />
+        )}
+      </div>
+    </header>
+  );
+}

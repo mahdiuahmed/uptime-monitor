@@ -17,6 +17,11 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Loader2, Globe } from "lucide-react";
+import Link from "next/link";
+import { toast } from "sonner";
+import Navbar from "@/components/navbar";
+// import router from "next/router";
+// import CreateCheckForm from "./create-check-form";
 
 // function StatusBadge({ status }: { status: string }) {
 //   const color = status === "online" ? "bg-green-500" : "bg-red-500";
@@ -73,6 +78,13 @@ export default function DashboardPage() {
       });
       setForm({ name: "", url: "", interval: 10 });
       const res = await fetch(`/api/get-checks?userId=${user.id}`);
+      if (res.ok) {
+        toast.success("✅ Check created");
+        //   router.refresh();
+      } else {
+        toast.error("❌ Failed to create check");
+      }
+
       const data = await res.json();
       setChecks(data);
     } catch (err) {
@@ -105,146 +117,160 @@ export default function DashboardPage() {
   //   };
 
   return (
-    <div className="container mx-auto p-6 max-w-4xl">
-      <div className="space-y-6">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Website Monitoring
-          </h1>
-          <p className="text-muted-foreground">
-            Monitor your websites and get notified when they go down
-          </p>
-        </div>
-
-        <Card>
-          <CardHeader>
-            <CardTitle>Add New Check</CardTitle>
-            <CardDescription>
-              Create a new website monitoring check
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Website Name</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="My Website"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    required
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="url">Website URL</Label>
-                  <Input
-                    id="url"
-                    type="url"
-                    placeholder="https://example.com"
-                    value={form.url}
-                    onChange={(e) => setForm({ ...form, url: e.target.value })}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="interval">Check Interval (minutes)</Label>
-                <Input
-                  id="interval"
-                  type="number"
-                  min={1}
-                  placeholder="10"
-                  value={form.interval}
-                  onChange={(e) =>
-                    setForm({ ...form, interval: Number(e.target.value) })
-                  }
-                  className="w-full md:w-48"
-                  required
-                />
-              </div>
-              <Button type="submit" disabled={loading}>
-                {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                {loading ? "Adding Check..." : "Add Check"}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
-
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-2xl font-semibold tracking-tight">
-              Your Checks
-            </h2>
-            <Badge variant="outline">{checks.length} total</Badge>
+    <>
+      <Navbar />
+      <div className="container mx-auto p-6 max-w-4xl">
+        <div className="space-y-6">
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">
+              Website Monitoring
+            </h1>
+            <p className="text-muted-foreground">
+              Monitor your websites and get notified when they go down
+            </p>
           </div>
 
-          {checks.length === 0 ? (
-            <Card>
-              <CardContent className="flex flex-col items-center justify-center py-12">
-                <Globe className="h-12 w-12 text-muted-foreground mb-4" />
-                <h3 className="text-lg font-semibold mb-2">No checks yet</h3>
-                <p className="text-muted-foreground text-center">
-                  Add your first website check to start monitoring
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            <div className="grid gap-4">
-              {checks.map((check) => (
-                <div
-                  className="rounded-xl border p-4 shadow-sm space-y-2"
-                  key={check.id}
-                >
-                  <div className="flex justify-between items-center">
-                    <h2 className="text-lg font-semibold">{check.name}</h2>
-                    <StatusBadge status={check.status} />
+          <Card>
+            <CardHeader>
+              <CardTitle>Add New Check</CardTitle>
+              <CardDescription>
+                Create a new website monitoring check
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Website Name</Label>
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="My Website"
+                      value={form.name}
+                      onChange={(e) =>
+                        setForm({ ...form, name: e.target.value })
+                      }
+                      required
+                    />
                   </div>
-                  <p className="text-sm text-muted-foreground">{check.url}</p>
-                  <p className="text-xs text-gray-500">
-                    Last checked:{" "}
-                    {check.last_ping_at
-                      ? new Date(check.last_ping_at).toLocaleString()
-                      : "Never"}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    Last response time: {check.last_duration_ms ?? "N/A"}
-                    ms
-                  </p>
+                  <div className="space-y-2">
+                    <Label htmlFor="url">Website URL</Label>
+                    <Input
+                      id="url"
+                      type="url"
+                      placeholder="https://example.com"
+                      value={form.url}
+                      onChange={(e) =>
+                        setForm({ ...form, url: e.target.value })
+                      }
+                      required
+                    />
+                  </div>
                 </div>
-                // <Card key={check.id}>
-                //   <CardContent className="p-6">
-                //     <div className="flex items-center justify-between">
-                //       <div className="space-y-1 flex-1">
-                //         <div className="flex items-center gap-2">
-                //           <h3 className="font-semibold">{check.name}</h3>
-                //           <Badge
-                //             variant="outline"
-                //             className={getStatusColor(check.status)}
-                //           >
-                //             {check.status}
-                //           </Badge>
-                //         </div>
-                //         <p className="text-sm text-muted-foreground flex items-center gap-1">
-                //           <Globe className="h-3 w-3" />
-                //           {check.url}
-                //         </p>
-                //         <p className="text-xs text-muted-foreground flex items-center gap-1">
-                //           <Clock className="h-3 w-3" />
-                //           Checked every {check.interval_minutes} minutes
-                //         </p>
-                //       </div>
+                <div className="space-y-2">
+                  <Label htmlFor="interval">Check Interval (minutes)</Label>
+                  <Input
+                    id="interval"
+                    type="number"
+                    min={1}
+                    placeholder="10"
+                    value={form.interval}
+                    onChange={(e) =>
+                      setForm({ ...form, interval: Number(e.target.value) })
+                    }
+                    className="w-full md:w-48"
+                    required
+                  />
+                </div>
+                <Button type="submit" disabled={loading}>
+                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {loading ? "Adding Check..." : "Add Check"}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
 
-                //     </div>
-                //   </CardContent>
-                // </Card>
-              ))}
+          {/* <CreateCheckForm /> */}
+
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-2xl font-semibold tracking-tight">
+                Your Checks
+              </h2>
+              <Badge variant="outline">{checks.length} total</Badge>
             </div>
-          )}
+
+            {checks.length === 0 ? (
+              <Card>
+                <CardContent className="flex flex-col items-center justify-center py-12">
+                  <Globe className="h-12 w-12 text-muted-foreground mb-4" />
+                  <h3 className="text-lg font-semibold mb-2">No checks yet</h3>
+                  <p className="text-muted-foreground text-center">
+                    Add your first website check to start monitoring
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="grid gap-4">
+                {checks.map((check) => (
+                  <div
+                    className="rounded-xl border p-4 shadow-sm space-y-2"
+                    key={check.id}
+                  >
+                    <div className="flex justify-between items-center">
+                      <h2 className="text-lg font-semibold">{check.name}</h2>
+                      <StatusBadge status={check.status} />
+                    </div>
+                    <Link
+                      href={check.url}
+                      className="text-sm text-muted-foreground underline hover:text-foreground"
+                    >
+                      {check.url}
+                    </Link>
+                    <p className="text-xs text-gray-500">
+                      Last checked:{" "}
+                      {check.last_ping_at
+                        ? new Date(check.last_ping_at).toLocaleString()
+                        : "Never"}
+                    </p>
+                    <p className="text-xs text-gray-500">
+                      Last response time: {check.last_duration_ms ?? "N/A"}
+                      ms
+                    </p>
+                  </div>
+                  // <Card key={check.id}>
+                  //   <CardContent className="p-6">
+                  //     <div className="flex items-center justify-between">
+                  //       <div className="space-y-1 flex-1">
+                  //         <div className="flex items-center gap-2">
+                  //           <h3 className="font-semibold">{check.name}</h3>
+                  //           <Badge
+                  //             variant="outline"
+                  //             className={getStatusColor(check.status)}
+                  //           >
+                  //             {check.status}
+                  //           </Badge>
+                  //         </div>
+                  //         <p className="text-sm text-muted-foreground flex items-center gap-1">
+                  //           <Globe className="h-3 w-3" />
+                  //           {check.url}
+                  //         </p>
+                  //         <p className="text-xs text-muted-foreground flex items-center gap-1">
+                  //           <Clock className="h-3 w-3" />
+                  //           Checked every {check.interval_minutes} minutes
+                  //         </p>
+                  //       </div>
+
+                  //     </div>
+                  //   </CardContent>
+                  // </Card>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
