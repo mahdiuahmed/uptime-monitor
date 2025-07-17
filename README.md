@@ -44,3 +44,18 @@ Built with **Next.js**, **TailwindCSS**, **ShadCN**, **Supabase**, and deployed 
    ```bash
    git clone https://github.com/your-username/uptime-monitor.git
    cd uptime-monitor
+
+2. Install dependencies:
+   ```bash
+   npm install
+
+3. Setup .env.local with
+   ```ini
+   NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
+   CLERK_SECRET_KEY=...
+   NEXT_PUBLIC_SUPABASE_URL=...
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+
+4. Run the dev server:
+   ```bash
+   npm install
