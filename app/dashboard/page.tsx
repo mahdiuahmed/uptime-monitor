@@ -119,7 +119,7 @@ export default function DashboardPage() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto p-6 max-w-4xl">
+      <div className="container mx-auto p-6 max-w-4xl mt-12">
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
@@ -211,7 +211,7 @@ export default function DashboardPage() {
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4">
+              <div className="grid md:grid-cols-2 gap-4">
                 {checks.map((check) => (
                   <div
                     className="rounded-xl border p-4 shadow-sm space-y-2"
@@ -223,7 +223,7 @@ export default function DashboardPage() {
                     </div>
                     <Link
                       href={check.url}
-                      className="text-sm text-muted-foreground underline hover:text-foreground"
+                      className="text-sm text-muted-foreground underline hover:text-foreground break-all"
                     >
                       {check.url}
                     </Link>

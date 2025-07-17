@@ -9,7 +9,7 @@ export default function Home() {
     <>
       {/* Navbar */}
       <Navbar />
-      <main className=" ">
+      <main className="px-8 ">
         <section className="flex flex-1 justify-center min-h-screen -mt-16 items-center">
           <div className=" max-w-4xl text-center">
             <Badge variant="secondary" className="mb-8 gap-2">
@@ -22,9 +22,9 @@ export default function Home() {
             </h1>
 
             <p className="mb-12 text-lg text-muted-foreground sm:text-xl lg:text-2xl">
-              Track your websites with precision. Get instant alerts, detailed
-              analytics, and peace of mind knowing your digital presence is
-              always monitored.
+              Track your site’s uptime with automated checks and a real-time
+              dashboard. Stay in control of your online presence – no setup
+              headaches.
             </p>
 
             <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
