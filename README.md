@@ -1,6 +1,4 @@
 ![Vercel Deploy](https://deploy-badge.vercel.app/vercel/uptime-monitor-weld)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/your-username/your-repo/deploy.yml?branch=main)
-![License](https://img.shields.io/github/license/mahdiuahmed/uptime-monitor)
 ![Made with Next.js](https://img.shields.io/badge/Made%20with-Next.js-000?logo=next.js)
 ![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E?logo=supabase&logoColor=white)
 
