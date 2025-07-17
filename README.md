@@ -1,8 +1,18 @@
+![Vercel Deploy](https://deploy-badge.vercel.app/vercel/uptime-monitor-weld)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/your-username/your-repo/deploy.yml?branch=main)
+![License](https://img.shields.io/github/license/mahdiuahmed/uptime-monitor)
+![Made with Next.js](https://img.shields.io/badge/Made%20with-Next.js-000?logo=next.js)
+![Supabase](https://img.shields.io/badge/Database-Supabase-3ECF8E?logo=supabase&logoColor=white)
+
 # 🔍 Uptime Monitor Dashboard
 
 A simple yet powerful full-stack web app that monitors the uptime of any URL or API and displays results in a real-time dashboard.
 
 Built with **Next.js**, **TailwindCSS**, **ShadCN**, **Supabase**, and deployed via **Vercel**. Includes CI/CD via GitHub Actions and real-time monitoring with Better Stack.
+
+## 📦 Releases
+
+- `v1.0.0` – MVP with uptime checks, dashboard, CI/CD, auth and monitoring
 
 ---
 
