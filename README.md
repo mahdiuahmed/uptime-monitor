@@ -40,9 +40,9 @@ Built with **Next.js**, **TailwindCSS**, **ShadCN**, **Supabase**, and deployed 
 
 ## 📸 Demo
 
-> [🔗 Live Site](https://your-vercel-url.vercel.app)
+> [🔗 Live Site](https://uptime-monitor-weld.vercel.app/)
 >  
-> [📊 Public Status Page](https://status.yourproject.betterstack.com)
+> [📊 Public Status Page](https://mahdiuahmed.betteruptime.com/)
 
 ---
 
