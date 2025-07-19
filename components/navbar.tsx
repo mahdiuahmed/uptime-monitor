@@ -11,16 +11,16 @@ export default function Navbar() {
   return (
     <header className=" sticky top-0 z-50 border-b bg-background/50 backdrop-blur-sm">
       <div className="p-8 flex h-16 items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Activity className="h-5 w-5" />
-          </div>
-          <Link href="/">
-            <span className="text-xl font-semibold text-foreground">
+        <Link href="/">
+          <div className="flex items-center space-x-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+              <Activity className="h-5 w-5" />
+            </div>
+            <span className="hidden sm:block text-xl font-bold text-foreground tracking-tight ">
               Uptime Monitor
             </span>
-          </Link>
-        </div>
+          </div>
+        </Link>
         {!user ? (
           <Button asChild>
             <Link href="/dashboard" className="flex items-center gap-2">

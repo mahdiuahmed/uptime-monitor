@@ -17,7 +17,7 @@ export default function Home() {
               Real-time monitoring
             </Badge>
 
-            <h1 className="mb-8 text-4xl font-bold tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="mb-8 text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
               Monitor Your Websites <span className="text-primary">24/7</span>
             </h1>
 
