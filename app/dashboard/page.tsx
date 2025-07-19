@@ -119,7 +119,7 @@ export default function DashboardPage() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto p-6 max-w-4xl mt-12">
+      <div className="container mx-auto p-6 max-w-4xl mt-8">
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
@@ -194,9 +194,7 @@ export default function DashboardPage() {
 
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <h2 className="text-2xl font-semibold tracking-tight">
-                Your Checks
-              </h2>
+              <h2 className="text-2xl font-bold ">Your Checks</h2>
               <Badge variant="outline">{checks.length} total</Badge>
             </div>
 

@@ -9,15 +9,18 @@ export default function Home() {
     <>
       {/* Navbar */}
       <Navbar />
-      <main className="px-8 ">
+      <main className="px-8">
         <section className="flex flex-1 justify-center min-h-screen -mt-16 items-center">
           <div className=" max-w-4xl text-center">
-            <Badge variant="secondary" className="mb-8 gap-2">
+            <Badge
+              variant="secondary"
+              className="mb-8 gap-2 inline-flex items-center"
+            >
               <Zap className="h-3 w-3" />
-              Real-time monitoring
+              <span>Real-time monitoring</span>
             </Badge>
 
-            <h1 className="mb-8 text-4xl font-extrabold tracking-tight sm:text-6xl lg:text-7xl">
+            <h1 className="mb-8 text-4xl  tracking-tight font-bold  sm:text-6xl lg:text-7xl">
               Monitor Your Websites <span className="text-primary">24/7</span>
             </h1>
 

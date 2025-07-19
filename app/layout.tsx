@@ -1,8 +1,9 @@
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import Footer from "@/components/footer";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -14,10 +15,11 @@ import { Toaster } from "sonner";
 //   subsets: ["latin"],
 // });
 
-const plusJakartaSans = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta-sans",
-  weight: ["200", "300", "400", "500", "600", "700", "800"],
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -39,8 +41,9 @@ export default function RootLayout({
           type="image/png"
           sizes="32x32"
         />
-        <body className={`${plusJakartaSans.className} antialiased `}>
+        <body className={`${poppins.variable}  antialiased `}>
           {children}
+          <Footer />
           <Toaster />
         </body>
       </html>
