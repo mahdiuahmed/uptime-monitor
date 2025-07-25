@@ -12,11 +12,7 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import bgImg from "../public/motherboard-circuit-technology-background-png-blue.png";
-import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-import DotGrid from "@/components/DotGrid/DotGrid";
-import Orb from "@/components/Orb/Orb";
 import Threads from "@/components/Threads/Threads";
 
 export default function Home() {
