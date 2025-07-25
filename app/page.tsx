@@ -15,61 +15,76 @@ import Link from "next/link";
 import bgImg from "../public/motherboard-circuit-technology-background-png-blue.png";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
+import DotGrid from "@/components/DotGrid/DotGrid";
+import Orb from "@/components/Orb/Orb";
+import Threads from "@/components/Threads/Threads";
 
 export default function Home() {
   return (
     <>
       {/* Navbar */}
-      <Image
+      {/* Background Image */}
+      {/* <Image
         alt="background image of a motherboard circuit"
         src={bgImg}
         // placeholder="blur"
-        quality={100}
+        // quality={100}
         fill
         sizes="100vw"
         style={{
           objectFit: "cover",
-        }}
-        className="-z-50 hue-rotate-60 opacity-40 grayscale-50 "
-      />
+          }}
+          className="-z-50 hue-rotate-60 opacity-40 grayscale-50 "
+          /> */}
+
       <Navbar />
       <main className="px-8">
         <section className="flex flex-1 justify-center min-h-screen -mt-16 items-center">
-          <div className=" max-w-5xl text-center ">
-            <Badge
-              variant="secondary"
-              className="mb-8 gap-2 inline-flex items-center"
-            >
-              <Zap className="h-3 w-3" />
-              <span>Real-time monitoring</span>
-            </Badge>
+          <div className="">
+            <div className=" max-w-5xl px-8 text-center ">
+              <Badge
+                variant="secondary"
+                className="mb-8 gap-2 inline-flex items-center"
+              >
+                <Zap className="h-3 w-3" />
+                <span>Real-time monitoring</span>
+              </Badge>
 
-            <h1 className="mb-4 text-6xl font-bold sm:text-6xl lg:text-7xl">
-              Monitor Your Websites <span className="text-primary">24/7</span>
-            </h1>
+              <h1 className="mb-4 text-6xl font-bold sm:text-6xl lg:text-7xl">
+                Monitor Your Websites <span className="text-primary">24/7</span>
+              </h1>
 
-            <p className="mb-12 text-lg text-muted-foreground sm:text-xl lg:text-2xl">
-              Track your site’s uptime with automated checks and a real-time
-              dashboard. Stay in control of your online presence – no setup
-              headaches.
-            </p>
+              <p className="mb-12 text-lg text-muted-foreground sm:text-xl lg:text-2xl">
+                Track your site’s uptime with automated checks and a real-time
+                dashboard. Stay in control of your online presence – no setup
+                headaches.
+              </p>
 
-            <div className="">
-              <Button size="lg" asChild>
-                <Link href="/dashboard" className="flex items-center gap-2">
-                  Start Monitoring Free
-                  <ArrowRight className="h-4 w-4" />
-                </Link>
-              </Button>
-              {/* <Button variant="outline" size="lg" asChild>
+              <div className="">
+                <Button size="lg" asChild>
+                  <Link href="/dashboard" className="flex items-center gap-2">
+                    Start Monitoring Free
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </Button>
+                {/* <Button variant="outline" size="lg" asChild>
                 <Link href="/demo">View Live Demo</Link>
               </Button> */}
+              </div>
+            </div>
+            <div className="w-screen h-screen absolute top-0 left-0 opacity-50 blur-sm -z-50">
+              <Threads
+                amplitude={1}
+                color={[1, 197, 94]}
+                distance={0.4}
+                enableMouseInteraction={false}
+              />
             </div>
           </div>
         </section>
 
         {/* Features Grid */}
-        <section className="py-20">
+        <section className="">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
