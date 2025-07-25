@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
-import { Poppins } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import Footer from "@/components/footer";
@@ -15,10 +15,10 @@ import Footer from "@/components/footer";
 //   subsets: ["latin"],
 // });
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  weight: ["200", "300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -41,7 +41,7 @@ export default function RootLayout({
           type="image/png"
           sizes="32x32"
         />
-        <body className={`${poppins.variable}  antialiased `}>
+        <body className={`${plusJakartaSans.variable}  antialiased `}>
           {children}
           <Footer />
           <Toaster />

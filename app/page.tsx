@@ -1,17 +1,41 @@
 import Navbar from "@/components/navbar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Zap } from "lucide-react";
+import {
+  ArrowRight,
+  BarChart3,
+  Bell,
+  CheckCircle,
+  Clock,
+  Globe,
+  Shield,
+  Zap,
+} from "lucide-react";
 import Link from "next/link";
+import bgImg from "../public/motherboard-circuit-technology-background-png-blue.png";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
 
 export default function Home() {
   return (
     <>
       {/* Navbar */}
+      <Image
+        alt="background image of a motherboard circuit"
+        src={bgImg}
+        // placeholder="blur"
+        quality={100}
+        fill
+        sizes="100vw"
+        style={{
+          objectFit: "cover",
+        }}
+        className="-z-50 hue-rotate-60 opacity-40 grayscale-50 "
+      />
       <Navbar />
       <main className="px-8">
         <section className="flex flex-1 justify-center min-h-screen -mt-16 items-center">
-          <div className=" max-w-4xl text-center">
+          <div className=" max-w-5xl text-center ">
             <Badge
               variant="secondary"
               className="mb-8 gap-2 inline-flex items-center"
@@ -20,7 +44,7 @@ export default function Home() {
               <span>Real-time monitoring</span>
             </Badge>
 
-            <h1 className="mb-8 text-4xl  tracking-tight font-bold  sm:text-6xl lg:text-7xl">
+            <h1 className="mb-4 text-6xl font-bold sm:text-6xl lg:text-7xl">
               Monitor Your Websites <span className="text-primary">24/7</span>
             </h1>
 
@@ -30,7 +54,7 @@ export default function Home() {
               headaches.
             </p>
 
-            <div className="flex flex-col gap-4 sm:flex-row sm:justify-center">
+            <div className="">
               <Button size="lg" asChild>
                 <Link href="/dashboard" className="flex items-center gap-2">
                   Start Monitoring Free
@@ -40,6 +64,109 @@ export default function Home() {
               {/* <Button variant="outline" size="lg" asChild>
                 <Link href="/demo">View Live Demo</Link>
               </Button> */}
+            </div>
+          </div>
+        </section>
+
+        {/* Features Grid */}
+        <section className="py-20">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">
+                Everything you need to monitor uptime
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Simple, powerful monitoring tools to keep your websites running
+                smoothly.
+              </p>
+            </div>
+
+            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+              <Card className="border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <Shield className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">
+                    99.9% Uptime SLA
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Reliable monitoring with industry-leading uptime guarantees
+                    for your peace of mind.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <Globe className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">
+                    Global Monitoring
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Monitor from multiple locations worldwide to ensure accurate
+                    uptime data.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <BarChart3 className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">
+                    Real-time Analytics
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Get detailed insights and performance metrics with beautiful
+                    dashboards.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <CheckCircle className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">Easy Setup</h3>
+                  <p className="text-muted-foreground">
+                    Start monitoring in minutes with our simple, no-code setup
+                    process.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <Clock className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">
+                    Frequent Checks
+                  </h3>
+                  <p className="text-muted-foreground">
+                    Monitor your sites every 30 seconds with instant downtime
+                    detection.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="border-border">
+                <CardContent className="p-6">
+                  <div className="w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center mb-4">
+                    <Bell className="h-6 w-6 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-semibold mb-2">Smart Alerts</h3>
+                  <p className="text-muted-foreground">
+                    Get notified instantly via email, SMS, or Slack when issues
+                    are detected.
+                  </p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </section>

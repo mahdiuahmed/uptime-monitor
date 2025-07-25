@@ -2,7 +2,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="border-t">
+    <footer className="border-t z-50  bg-background">
       <div className=" py-8">
         <div className="text-center text-sm text-muted-foreground">
           <p className="px-8">

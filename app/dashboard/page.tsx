@@ -9,6 +9,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import {
   Card,
   CardContent,
   CardDescription,
@@ -16,10 +27,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Globe } from "lucide-react";
+import { Loader2, Globe, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import Navbar from "@/components/navbar";
+// import Image from "next/image";
+// import bgImg from "../../public/motherboard-circuit-technology-background-png-blue.png";
+
 // import router from "next/router";
 // import CreateCheckForm from "./create-check-form";
 
@@ -119,7 +133,19 @@ export default function DashboardPage() {
   return (
     <>
       <Navbar />
-      <div className="container mx-auto p-6 max-w-4xl mt-8">
+      {/* <Image
+        alt="background image of a motherboard circuit"
+        src={bgImg}
+        // placeholder="blur"
+        quality={100}
+        fill
+        // sizes="100vw"
+        style={{
+          objectFit: "cover",
+        }}
+        className="-z-50 hue-rotate-60 opacity-50 blur-sm"
+      /> */}
+      <div className="container mx-auto p-6 max-w-4xl mt-6">
         <div className="space-y-6">
           <div>
             <h1 className="text-3xl font-bold tracking-tight">
@@ -192,7 +218,7 @@ export default function DashboardPage() {
 
           {/* <CreateCheckForm /> */}
 
-          <div className="space-y-4">
+          <div className="space-y-4 mb-12">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold ">Your Checks</h2>
               <Badge variant="outline">{checks.length} total</Badge>
@@ -212,12 +238,40 @@ export default function DashboardPage() {
               <div className="grid md:grid-cols-2 gap-4">
                 {checks.map((check) => (
                   <div
-                    className="rounded-xl border p-4 shadow-sm space-y-2"
+                    className="rounded-xl border p-4 shadow-sm space-y-2 bg-background"
                     key={check.id}
                   >
                     <div className="flex justify-between items-center">
                       <h2 className="text-lg font-semibold">{check.name}</h2>
-                      <StatusBadge status={check.status} />
+                      <div className="flex items-center space-x-2">
+                        <StatusBadge status={check.status} />
+                        <AlertDialog>
+                          <AlertDialogTrigger
+                            asChild
+                            className="cursor-pointer"
+                          >
+                            {/* <Button variant="ghost" size="icon"> */}
+                            <Trash2 size={16} color="#9a2c2c" className="" />
+                            {/* </Button> */}
+                          </AlertDialogTrigger>
+                          <AlertDialogContent>
+                            <AlertDialogHeader>
+                              <AlertDialogTitle>
+                                Are you absolutely sure?
+                              </AlertDialogTitle>
+                              <AlertDialogDescription>
+                                This action cannot be undone. This will
+                                permanently delete your monitoring for this
+                                website and remove your data from our servers.
+                              </AlertDialogDescription>
+                            </AlertDialogHeader>
+                            <AlertDialogFooter>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
+                              <AlertDialogAction>Continue</AlertDialogAction>
+                            </AlertDialogFooter>
+                          </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
                     </div>
                     <Link
                       href={check.url}
@@ -273,10 +327,10 @@ export default function DashboardPage() {
 }
 
 function StatusBadge({ status }: { status: string }) {
-  const color = status === "online" ? "bg-green-500" : "bg-red-500";
+  const color = status === "online" ? "bg-green-700" : "bg-red-700";
   return (
-    <Badge className={color + " text-white"}>
-      {status === "online" ? "Online 🟢" : "Offline 🔴"}
+    <Badge className={color + " text-white h-fit"}>
+      {status === "online" ? "Online" : "Offline"}
     </Badge>
   );
 }
