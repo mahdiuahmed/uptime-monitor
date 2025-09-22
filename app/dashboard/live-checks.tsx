@@ -10,7 +10,7 @@ type Check = {
   id: string;
   url: string;
   name: string;
-  interval_minutes: number;
+  // interval_minutes: number;
   status: string;
   last_duration_ms: number;
   last_ping_at: Date;

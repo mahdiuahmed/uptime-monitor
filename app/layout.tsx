@@ -3,7 +3,6 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
-import Footer from "@/components/footer";
 
 // const geistSans = Geist({
 //   variable: "--font-geist-sans",
@@ -43,7 +42,6 @@ export default function RootLayout({
         />
         <body className={`${plusJakartaSans.variable}  antialiased `}>
           {children}
-          <Footer />
           <Toaster />
         </body>
       </html>

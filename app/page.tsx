@@ -14,6 +14,8 @@ import {
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
 import Threads from "@/components/Threads/Threads";
+import Footer from "@/components/footer";
+// import BlurText from "@/components/BlurText/BlurText";
 
 export default function Home() {
   return (
@@ -34,47 +36,45 @@ export default function Home() {
           /> */}
 
       <Navbar />
+      <div className="w-screen h-screen absolute top-0 left-0 opacity-50 blur-sm -z-50">
+        <Threads
+          amplitude={1}
+          color={[1, 197, 94]}
+          distance={0.4}
+          enableMouseInteraction={false}
+        />
+      </div>
       <main className="px-8">
         <section className="flex flex-1 justify-center min-h-screen -mt-16 items-center">
-          <div className="">
-            <div className=" max-w-5xl px-8 text-center ">
-              <Badge
-                variant="secondary"
-                className="mb-8 gap-2 inline-flex items-center"
-              >
-                <Zap className="h-3 w-3" />
-                <span>Real-time monitoring</span>
-              </Badge>
+          <div className=" max-w-5xl text-center ">
+            <Badge
+              variant="secondary"
+              className="mb-8 gap-2 inline-flex items-center"
+            >
+              <Zap className="h-3 w-3" />
+              <span>Real-time monitoring</span>
+            </Badge>
 
-              <h1 className="mb-4 text-6xl font-bold sm:text-6xl lg:text-7xl">
-                Monitor Your Websites <span className="text-primary">24/7</span>
-              </h1>
+            <h1 className="mb-4 text-5xl font-bold sm:text-6xl lg:text-7xl">
+              Monitor Your Websites <span className="text-primary">24/7</span>
+            </h1>
 
-              <p className="mb-12 text-lg text-muted-foreground sm:text-xl lg:text-2xl">
-                Track your site’s uptime with automated checks and a real-time
-                dashboard. Stay in control of your online presence – no setup
-                headaches.
-              </p>
+            <p className="mb-12 text-lg text-muted-foreground sm:text-xl lg:text-2xl">
+              Track your site’s uptime with automated checks and a real-time
+              dashboard. Stay in control of your online presence – no setup
+              headaches.
+            </p>
 
-              <div className="">
-                <Button size="lg" asChild>
-                  <Link href="/dashboard" className="flex items-center gap-2">
-                    Start Monitoring Free
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                </Button>
-                {/* <Button variant="outline" size="lg" asChild>
+            <div className="">
+              <Button size="lg" asChild>
+                <Link href="/dashboard" className="flex items-center gap-2">
+                  Start Monitoring Free
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+              </Button>
+              {/* <Button variant="outline" size="lg" asChild>
                 <Link href="/demo">View Live Demo</Link>
               </Button> */}
-              </div>
-            </div>
-            <div className="w-screen h-screen absolute top-0 left-0 opacity-50 blur-sm -z-50">
-              <Threads
-                amplitude={1}
-                color={[1, 197, 94]}
-                distance={0.4}
-                enableMouseInteraction={false}
-              />
             </div>
           </div>
         </section>
@@ -182,6 +182,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+      <Footer />
     </>
   );
 }

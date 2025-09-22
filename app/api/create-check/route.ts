@@ -8,7 +8,7 @@ export async function POST(req: Request) {
   if (!userId)
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-  //   supabase
+  //supabase
   const { name, url } = await req.json();
 
   const { error } = await supabase.from("checks").insert({
