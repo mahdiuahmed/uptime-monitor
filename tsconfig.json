@@ -27,7 +27,10 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "app/dashboard/loading.js"
+    "app/dashboard/loading.js",
+    "vitest.config.mts",
+    "app/api/create-check/route.js",
+    "lib/supabase.ts"
   ],
   "exclude": ["node_modules"]
 }
