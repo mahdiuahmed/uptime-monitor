@@ -4,16 +4,6 @@ import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 
-// const geistSans = Geist({
-//   variable: "--font-geist-sans",
-//   subsets: ["latin"],
-// });
-
-// const geistMono = Geist_Mono({
-//   variable: "--font-geist-mono",
-//   subsets: ["latin"],
-// });
-
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
@@ -33,15 +23,18 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en">
         <link
           rel="icon"
           href="/icon?<generated>"
           type="image/png"
           sizes="32x32"
         />
-        <body className={`${plusJakartaSans.variable}  antialiased `}>
-          {children}
+        <body
+          suppressHydrationWarning
+          className={`${plusJakartaSans.variable} antialiased `}
+        >
+          <main className="font-sans">{children}</main>
           <Toaster />
         </body>
       </html>

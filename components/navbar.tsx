@@ -13,10 +13,10 @@ export default function Navbar() {
       <div className="p-8 flex h-16 items-center justify-between">
         <Link href="/">
           <div className="flex items-center space-x-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary text-primary-foreground">
+            <div className="flex h-10 w-10 items-center justify-center rounded-md bg-primary-600 text-primary-foreground">
               <Activity className="h-5 w-5" />
             </div>
-            <span className="hidden sm:block text-xl text-foreground tracking-tighter ">
+            <span className="hidden sm:block text-xl text-foreground tracking-tighter font-semibold ">
               Uptime Monitor
             </span>
           </div>

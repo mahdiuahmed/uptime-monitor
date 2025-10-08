@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest",
+    "test:vitest": "vitest",
+    "test:jest": "jest",
+    "test:watch": "jest --watch",
     "mocha": "mocha -r ts-node/register 'test/**/*.test.ts'"
   },
   "dependencies": {
@@ -51,6 +53,7 @@
     "@testing-library/react": "^16.3.0",
     "@types/chai": "^5.2.2",
     "@types/expect": "^1.20.4",
+    "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -61,6 +64,8 @@
     "cross-env": "^10.1.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
     "jsdom": "^26.1.0",
     "mocha": "^11.7.4",
     "sinon": "^21.0.0",

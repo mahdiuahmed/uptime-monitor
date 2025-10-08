@@ -19,19 +19,12 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { UserButton, useUser } from "@clerk/nextjs";
+import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
 import { Activity } from "lucide-react";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const { user } = useUser();
-
   const data = {
-    user: {
-      name: user?.fullName,
-      email: user?.primaryEmailAddress?.emailAddress,
-      avatar: user?.imageUrl,
-    },
     navMain: [
       {
         title: "Dashboard",
