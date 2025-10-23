@@ -7,10 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:vitest": "vitest",
-    "test:jest": "jest",
-    "test:watch": "jest --watch",
-    "mocha": "mocha -r ts-node/register 'test/**/*.test.ts'"
+    "test": "vitest"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.23.0",
