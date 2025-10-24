@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest"
+    "test": "NODE_ENV=test next dev --turbopack",
+    "vitest": "vitest __tests__/vitest",
+    "bdd": "cucumber-js",
+    "selenium": "vitest --run"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.23.0",
@@ -39,10 +42,15 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "recharts": "^2.15.4",
+    "selenium-webdriver": "^4.37.0",
     "sonner": "^2.0.6",
     "tailwind-merge": "^3.3.1"
   },
   "devDependencies": {
+    "@clerk/testing": "^1.13.8",
+    "@cucumber/cucumber": "^12.2.0",
+    "@cucumber/messages": "^30.1.0",
+    "@cucumber/pretty-formatter": "^2.3.0",
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
     "@testing-library/dom": "^10.4.1",
@@ -52,13 +60,15 @@
     "@types/expect": "^1.20.4",
     "@types/jest": "^30.0.0",
     "@types/mocha": "^10.0.10",
-    "@types/node": "^20",
+    "@types/node": "^20.19.23",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/selenium-webdriver": "^4.35.2",
     "@types/sinon": "^17.0.4",
     "@vitejs/plugin-react": "^5.0.4",
     "chai": "^6.2.0",
     "cross-env": "^10.1.0",
+    "cypress": "^14.5.4",
     "eslint": "^9",
     "eslint-config-next": "15.3.4",
     "jest": "^30.2.0",
@@ -72,7 +82,7 @@
     "tsconfig-paths": "^4.2.0",
     "tsx": "^4.20.6",
     "tw-animate-css": "^1.3.4",
-    "typescript": "^5",
+    "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^3.2.4"
   }

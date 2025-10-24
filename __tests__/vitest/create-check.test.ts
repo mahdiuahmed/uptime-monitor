@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { POST } from "../app/api/create-check/route"; // adjust path
+import { POST } from "../../app/api/create-check/route"; // adjust path
 import { supabase } from "@/lib/supabase";
 import { auth } from "@clerk/nextjs/server";
 

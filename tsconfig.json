@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ES2017",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "allowImportingTsExtensions": true,
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -19,7 +20,8 @@
       }
     ],
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@tests/*": ["./tests/*"]
     }
   },
   "include": [
@@ -30,7 +32,8 @@
     "app/dashboard/loading.js",
     "vitest.config.mts",
     "app/api/create-check/route.js",
-    "lib/supabase.ts"
+    "lib/supabase.ts",
+    "__tests__/selenium/auth.test.js"
   ],
   "exclude": ["node_modules"]
 }
