@@ -1,19 +1,27 @@
-// __tests__/selenium/auth.test.js
+// __tests__/selenium/auth-simple.test.js
 import { Builder, Browser, By, until } from "selenium-webdriver";
+import chrome from "selenium-webdriver/chrome";
 
-describe("Clerk Authentication Flow", () => {
+describe("Simple Clerk Auth", () => {
   let driver;
-  const baseUrl = "http://localhost:3000";
-  const email = "test123@test.com";
-  const password = "test123@test.com";
 
   beforeAll(async () => {
-    driver = await new Builder().forBrowser(Browser.CHROME).build();
-    await driver.manage().setTimeouts({
-      implicit: 10000,
-      pageLoad: 30000,
-      script: 30000,
-    });
+    const options = new chrome.Options();
+    options.addArguments(
+      "--disable-notifications", // Disable notification popups
+      "--disable-popup-blocking", // Disable popup blocking (allow all popups)
+      "--disable-default-apps", // Disable default apps
+      "--disable-infobars", // Disable "Chrome is being controlled" infobar
+      "--disable-web-security", // Disable web security (for testing)
+      "--disable-extensions", // Disable extensions
+      "--no-first-run", // Skip first run dialogs
+      "--incognito", // Skip first run dialogs
+      "--no-default-browser-check" // Disable default browser check
+    );
+    driver = await new Builder()
+      .forBrowser(Browser.CHROME)
+      .setChromeOptions(options)
+      .build();
     await driver.manage().window().maximize();
   });
 
@@ -23,99 +31,55 @@ describe("Clerk Authentication Flow", () => {
     }
   });
 
-  test("should sign in with valid credentials and redirect to dashboard", async () => {
-    console.log("Step 1: Navigating to sign-in page...");
-    await driver.get(`${baseUrl}/sign-in`);
+  test("simple sign in", async () => {
+    console.log("1. Going to sign-in page");
+    await driver.get("http://localhost:3000/sign-in");
 
-    // Wait for Clerk form to load completely
-    console.log("Step 2: Waiting for email input...");
-    await driver.wait(until.elementLocated(By.id("identifier-field")), 15000);
-
-    // Wait for element to be interactable
+    console.log("2. Filling email");
     const emailInput = await driver.wait(
-      until.elementIsVisible(driver.findElement(By.id("identifier-field"))),
+      until.elementLocated(By.id("identifier-field")),
       10000
     );
+    await emailInput.sendKeys("test123@test.com");
 
-    console.log("Step 3: Filling email...");
-    await emailInput.clear();
-    await emailInput.sendKeys(email);
-
-    console.log("Step 4: Clicking continue button...");
-    const continueButton = await driver.wait(
-      until.elementIsVisible(
-        driver.findElement(By.css("button.cl-formButtonPrimary"))
-      ),
-      10000
+    console.log("3. Clicking continue");
+    const continueBtn1 = await driver.findElement(
+      By.css("button.cl-formButtonPrimary")
     );
-    await continueButton.click();
+    await continueBtn1.click();
 
-    // Wait for password field with multiple conditions
-    console.log("Step 5: Waiting for password input...");
-    const passwordInput = await driver.wait(
-      until.elementIsVisible(
-        until.elementIsEnabled(driver.findElement(By.id("password-field")))
-      ),
-      15000
+    console.log("4. Waiting for password field");
+    // Wait for the page to update and password field to be available
+    await driver.wait(until.elementLocated(By.id("password-field")), 10000);
+
+    // Small pause to ensure form is ready
+    await driver.sleep(1000);
+
+    console.log("5. Refinding password field and filling it");
+    // REFIND the element after page transition
+    const passwordInput = await driver.findElement(By.id("password-field"));
+
+    // Click the field first to focus it
+    await passwordInput.click();
+
+    // Clear any existing value
+    await passwordInput.clear();
+
+    // Type the password character by character (like a real user)
+    await passwordInput.sendKeys("test123@test.com");
+
+    console.log("6. Refinding and clicking continue button");
+    // REFIND the continue button after page transition
+    const continueBtn2 = await driver.findElement(
+      By.css("button.cl-formButtonPrimary")
     );
+    await continueBtn2.click();
 
-    console.log("Step 6: Filling password...");
-    // Use JavaScript execution as fallback if clear doesn't work
-    await driver.executeScript("arguments[0].value = '';", passwordInput);
-    await passwordInput.sendKeys(password);
+    console.log("7. Waiting for dashboard");
+    await driver.wait(until.urlContains("/dashboard"), 15000);
 
-    console.log("Step 7: Clicking continue button for password...");
-    const signInButton = await driver.wait(
-      until.elementIsVisible(
-        driver.findElement(By.css("button.cl-formButtonPrimary"))
-      ),
-      10000
-    );
-    await signInButton.click();
-
-    // Wait for redirect to dashboard
-    console.log("Step 8: Waiting for dashboard redirect...");
-    await driver.wait(until.urlContains("/dashboard"), 20000);
-
-    // Verify we're on dashboard
     const currentUrl = await driver.getCurrentUrl();
-    console.log("Current URL:", currentUrl);
+    console.log("✅ Success! Current URL:", currentUrl);
     expect(currentUrl).toContain("/dashboard");
-
-    console.log("✅ Sign in successful!");
-  });
-
-  //   test("should show error with invalid credentials", async () => {
-  //     console.log("Testing invalid credentials...");
-  //     await driver.get(`${baseUrl}/sign-in`);
-
-  //     const emailInput = await driver.wait(
-  //       until.elementIsVisible(driver.findElement(By.id("identifier-field"))),
-  //       10000
-  //     );
-
-  //     await emailInput.clear();
-  //     await emailInput.sendKeys("wrong@email.com");
-
-  //     const continueButton = await driver.wait(
-  //       until.elementIsVisible(
-  //         driver.findElement(By.css("button.cl-formButtonPrimary"))
-  //       ),
-  //       10000
-  //     );
-  //     await continueButton.click();
-
-  //     // Wait for any potential error message
-  //     try {
-  //       await driver.wait(until.elementLocated(By.css('[class*="error"]')), 5000);
-  //       const errorElement = await driver.findElement(By.css('[class*="error"]'));
-  //       const errorText = await errorElement.getText();
-  //       expect(errorText).toContain("Invalid");
-  //     } catch (error) {
-  //       console.log("No specific error message found");
-  //       // Check if we're still on sign-in page (meaning auth failed)
-  //       const currentUrl = await driver.getCurrentUrl();
-  //       expect(currentUrl).toContain("/sign-in");
-  //     }
-  //   });
+  }, 30000);
 });
