@@ -23,9 +23,10 @@ Built with **Next.js**, **TailwindCSS**, **ShadCN**, **Supabase**, and deployed 
 ## 💻 Technologies Used
 - **Frontend:** Next.js(App Router, TypeScript), Tailwind CSS, ShadCN UI
 - **Auth:** Clerk
-- **Cloud Infrastructure:** AWS(Lambda, S3, DynamoDB, ECR)
-- **Docker Container:** OpenAI Whisper (Python)
-- **Testing:** Cypress
+- **Database:** Supabase
+- **E2E Testing:** Selenium WebDriver
+- **Unit Testing:** Vitest
+- **BDD Testing:** Cucumber + Gherkin
 
 ---
 
