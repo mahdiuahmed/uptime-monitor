@@ -8,62 +8,99 @@ A simple yet powerful full-stack web app that monitors the uptime of any URL or 
 
 Built with **Next.js**, **TailwindCSS**, **ShadCN**, **Supabase**, and deployed via **Vercel**. Includes CI/CD via GitHub Actions and real-time monitoring with Better Stack.
 
-## 📦 Releases
+---
 
-- `v1.0.0` – MVP with uptime checks, dashboard, CI/CD, auth and monitoring
+## 📋 Table of Contents
+
+- [💻 Technologies Used](#technologies-used)
+- [🚀 Getting Started & Prerequisites](#getting-started-&-prerequisites)
+- [🧪 Testing](#testing)
+- [🤝 Contributing](#contributing)
+- [📜 License](#license)
 
 ---
 
-## 🚀 Features
-
-- ✅ Add and manage uptime checks for any website/API
-- 📈 Visual dashboard showing online/offline status
-- 🧪 Background scheduled pings using server actions
-- 🔐 Authentication with Clerk
-- 🧩 Data stored in Supabase (PostgreSQL)
-- 🌐 Deployed on Vercel
-- 🛠️ CI/CD via GitHub Actions
-- 📊 Production monitoring using Better Stack
+## 💻 Technologies Used
+- **Next.js** (App Router, TypeScript)
+- **Tailwind CSS**
+- **ShadCN UI**
+- **Clerk Authentication**
+- **AWS (Lambda, S3, DynamoDB, ECR)**
+- **OpenAI Whisper (Python)**
+- **Cypress**
 
 ---
 
-## 🖥️ Tech Stack
+## 🚀 Getting Started & Prerequisites
 
-- **Frontend:** Next.js 14 App Router, TailwindCSS, ShadCN
-- **Backend:** Supabase (PostgreSQL), Server Actions
-- **Auth:** Clerk.dev
-- **CI/CD:** GitHub Actions
-- **Monitoring:** Better Stack Uptime
-- **Deployment:** Vercel
+To get started with this project, you will need to have [Node.js](https://nodejs.org) and [Docker Desktop](https://docker.com) installed on your machine. Once you have that installed, follow these steps:
 
----
+1. Clone the repository to your local machine:
+```
+git clone https://github.com/mahdiuahmed/uptime-monitor.git
+```
 
-## 📸 Demo
-
-> [🔗 Live Site](https://uptime-monitor-weld.vercel.app/)
->  
-> [📊 Public Status Page](https://mahdiuahmed.betteruptime.com/)
-
----
-
-## 🛠️ Setup Instructions
-
-1. Clone the repo:
-   ```bash
-   git clone https://github.com/your-username/uptime-monitor.git
-   cd uptime-monitor
-
-2. Install dependencies:
-   ```bash
-   npm install
-
-3. Setup .env.local with
+2. Setup .env.local with
    ```ini
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   NEXT_PUBLIC_SUPABASE_URL=...
+   NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY=...
+   
    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=...
    CLERK_SECRET_KEY=...
-   NEXT_PUBLIC_SUPABASE_URL=...
-   NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+   
+   NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+   NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+   NEXT_PUBLIC_CLERK_SIGN_IN_FORCE_REDIRECT_URL=/dashboard
+   NEXT_PUBLIC_CLERK_SIGN_UP_FORCE_REDIRECT_URL=/dashboard
+   NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+   NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+   
+3. Build with docker and run the container:
+```
+docker build -t uptime-monitor:latest .
+docker run -p 3000:3000 uptime-monitor:latest
+```
 
-4. Run the dev server:
-   ```bash
-   npm install
+---
+
+## 🧪 Testing
+
+The testing suites we are using are:
+- **E2E** (End-to-End) [Selenium WebDriver (JS)]("https://www.selenium.dev/selenium/docs/api/javascript/")
+- **Unit Testing** [Vitest]("https://vitest.dev/")
+- **BDD** [Cucumber + Gherkin]("https://cucumber.io/")
+
+1. Run E2E testing with:
+```
+npm run selenium
+```
+
+2. Run unit testing with:
+```
+npm run vitest
+```
+
+3. Run BDD testing with:
+```
+npm run bdd
+```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! To contribute to this project, follow these steps:
+
+1. Fork the repository
+2. Create a new branch (`git checkout -b new-feature`)
+3. Make your changes
+4. Commit your changes (`git commit -am 'Added some feature'`)
+5. Push to the branch (`git push origin new-feature`)
+6. Create a new Pull Request
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
