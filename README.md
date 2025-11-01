@@ -21,13 +21,11 @@ Built with **Next.js**, **TailwindCSS**, **ShadCN**, **Supabase**, and deployed 
 ---
 
 ## 💻 Technologies Used
-- **Next.js** (App Router, TypeScript)
-- **Tailwind CSS**
-- **ShadCN UI**
-- **Clerk Authentication**
-- **AWS (Lambda, S3, DynamoDB, ECR)**
-- **OpenAI Whisper (Python)**
-- **Cypress**
+- **Frontend:** Next.js(App Router, TypeScript), Tailwind CSS, ShadCN UI
+- **Auth:** Clerk
+- **Cloud Infrastructure:** AWS(Lambda, S3, DynamoDB, ECR)
+- **Docker Container:** OpenAI Whisper (Python)
+- **Testing:** Cypress
 
 ---
 
