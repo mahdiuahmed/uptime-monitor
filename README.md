@@ -66,9 +66,9 @@ docker run -p 3000:3000 uptime-monitor:latest
 ## 🧪 Testing
 
 The testing suites we are using are:
-- **E2E** (End-to-End) [Selenium WebDriver (JS)]("https://www.selenium.dev/selenium/docs/api/javascript/")
-- **Unit Testing** [Vitest]("https://vitest.dev/")
-- **BDD** [Cucumber + Gherkin]("https://cucumber.io/")
+- **E2E** (End-to-End) [Selenium WebDriver (JS)](https://www.selenium.dev/selenium/docs/api/javascript/)
+- **Unit Testing** [Vitest](https://vitest.dev/)
+- **BDD** [Cucumber + Gherkin](https://cucumber.io/)
 
 1. Run E2E testing with:
 ```
