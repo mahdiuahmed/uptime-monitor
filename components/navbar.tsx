@@ -22,7 +22,7 @@ export default function Navbar() {
           </div>
         </Link>
         {!user ? (
-          <Button asChild className="bg-white">
+          <Button asChild variant={"outline"}>
             <Link href="/dashboard" className="flex items-center gap-2">
               Log into Dashboard
               <ArrowRight className="h-4 w-4" />

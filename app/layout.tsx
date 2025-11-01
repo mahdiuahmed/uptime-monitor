@@ -32,7 +32,7 @@ export default function RootLayout({
         />
         <body
           suppressHydrationWarning
-          className={`${plusJakartaSans.variable} antialiased `}
+          className={`${plusJakartaSans.variable} antialiased`}
         >
           <main className="font-sans">{children}</main>
           <Toaster />

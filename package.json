@@ -8,9 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "test": "NODE_ENV=test next dev --turbopack",
-    "vitest": "vitest __tests__/vitest",
-    "bdd": "cucumber-js",
-    "selenium": "vitest --run"
+    "vitest": "vitest __tests__/vitest --run",
+    "bdd": "cucumber-js -f @cucumber/pretty-formatter",
+    "selenium": "vitest __tests__/selenium --run"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.23.0",

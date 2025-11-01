@@ -34,8 +34,9 @@ RUN addgroup -g 1001 -S nodejs \
     && adduser -S nextjs -u 1001
 USER nextjs
 
+# Expose port
+EXPOSE 3000
+
 # Start the app
 CMD ["npm", "start"]
 
-# Expose port
-EXPOSE 3000

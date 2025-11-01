@@ -27,7 +27,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Loader2, Globe, Trash2, Search, LayoutDashboard } from "lucide-react";
+import {
+  Loader2,
+  Globe,
+  Trash2,
+  Search,
+  LayoutDashboard,
+  LoaderCircle,
+} from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
 import { supabase } from "@/lib/supabase";
@@ -435,15 +442,20 @@ function StatusBadge({ status }: { status: string }) {
     status === "online"
       ? "bg-green-700"
       : status === "unknown"
-      ? "bg-muted"
+      ? "bg-secondary"
       : "bg-red-700";
   return (
-    <Badge className={color + " text-white h-fit"}>
-      {status === "online"
-        ? "Online"
-        : status === "unknown"
-        ? "Pending"
-        : "Offline"}
+    <Badge className={color + " text-white h-fit flex items-center"}>
+      {status === "online" ? (
+        "Online"
+      ) : status === "unknown" ? (
+        <>
+          <LoaderCircle className=" animate-spin" />
+          Pending
+        </>
+      ) : (
+        "Offline"
+      )}
     </Badge>
   );
 }

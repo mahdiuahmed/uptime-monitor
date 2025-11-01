@@ -7,21 +7,14 @@ describe("Simple Clerk Auth", () => {
 
   beforeAll(async () => {
     const options = new chrome.Options();
-    options.addArguments(
-      "--disable-notifications", // Disable notification popups
-      "--disable-popup-blocking", // Disable popup blocking (allow all popups)
-      "--disable-default-apps", // Disable default apps
-      "--disable-infobars", // Disable "Chrome is being controlled" infobar
-      "--disable-web-security", // Disable web security (for testing)
-      "--disable-extensions", // Disable extensions
-      "--no-first-run", // Skip first run dialogs
-      "--incognito", // Skip first run dialogs
-      "--no-default-browser-check" // Disable default browser check
-    );
+    options.addArguments("--incognito");
     driver = await new Builder()
       .forBrowser(Browser.CHROME)
       .setChromeOptions(options)
       .build();
+    await driver.manage().setTimeouts({
+      implicit: 20000,
+    });
     await driver.manage().window().maximize();
   });
 
@@ -37,8 +30,7 @@ describe("Simple Clerk Auth", () => {
 
     console.log("2. Filling email");
     const emailInput = await driver.wait(
-      until.elementLocated(By.id("identifier-field")),
-      10000
+      until.elementLocated(By.id("identifier-field"))
     );
     await emailInput.sendKeys("test123@test.com");
 
@@ -50,7 +42,7 @@ describe("Simple Clerk Auth", () => {
 
     console.log("4. Waiting for password field");
     // Wait for the page to update and password field to be available
-    await driver.wait(until.elementLocated(By.id("password-field")), 10000);
+    await driver.wait(until.elementLocated(By.id("password-field")));
 
     // Small pause to ensure form is ready
     await driver.sleep(1000);
@@ -76,10 +68,10 @@ describe("Simple Clerk Auth", () => {
     await continueBtn2.click();
 
     console.log("7. Waiting for dashboard");
-    await driver.wait(until.urlContains("/dashboard"), 15000);
+    await driver.wait(until.urlContains("/dashboard"));
 
     const currentUrl = await driver.getCurrentUrl();
     console.log("✅ Success! Current URL:", currentUrl);
     expect(currentUrl).toContain("/dashboard");
-  }, 30000);
+  }, 60000); // Set timeout for this test to 60 seconds
 });

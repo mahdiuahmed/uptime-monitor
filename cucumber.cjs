@@ -1,10 +1,11 @@
 // cucumber.js
 module.exports = {
   default: {
-    require: ["./__tests__/steps/**/*.ts", "./__tests__/steps/**/*.feature"],
+    require: [
+      "./__tests__/cucumber/steps/**/*.ts",
+      "./__tests__/cucumber/steps/**/*.feature",
+    ],
     requireModule: ["ts-node/register"],
-    paths: ["./__tests__/features/**/*.feature"],
-    // publishQuiet: true,
-    // format: ["progress"],
+    paths: ["./__tests__/cucumber/features/**/*.feature"],
   },
 };

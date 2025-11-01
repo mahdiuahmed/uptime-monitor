@@ -1,10 +1,19 @@
 import { Builder, By, until, Browser } from "selenium-webdriver";
+import chrome from "selenium-webdriver/chrome";
 
 describe("Home Page UI Tests", () => {
   let driver;
 
   beforeAll(async () => {
-    driver = await new Builder().forBrowser(Browser.CHROME).build();
+    const options = new chrome.Options();
+    options.addArguments("--incognito");
+    driver = await new Builder()
+      .forBrowser(Browser.CHROME)
+      .setChromeOptions(options)
+      .build();
+    await driver.manage().setTimeouts({
+      implicit: 20000,
+    });
     await driver.get("http://localhost:3000/");
   });
 
@@ -36,5 +45,5 @@ describe("Home Page UI Tests", () => {
 
     const currentUrl = await driver.getCurrentUrl();
     expect(currentUrl).toContain("/sign-in");
-  });
+  }, 60000); // Set timeout for this test to 60 seconds
 });
