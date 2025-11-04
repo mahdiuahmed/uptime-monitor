@@ -1,11 +1,7 @@
-// tests/delete-checks.test.ts
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { GET } from "@/app/api/delete-check/route";
 import { NextRequest } from "next/server";
 
-// Mock Supabase
 const mockSelect = vi.fn();
 
 vi.mock("@/lib/supabase", () => ({
@@ -24,7 +20,7 @@ describe("GET /api/delete-checks", () => {
   });
 
   it("returns empty array if no userId is provided", async () => {
-    const req = new NextRequest("http://localhost/api/delete-checks"); // no userId param
+    const req = new NextRequest("http://localhost/api/delete-checks");
 
     const res = await GET(req);
     const json = await res.json();

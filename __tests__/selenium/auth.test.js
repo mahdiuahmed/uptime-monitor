@@ -1,4 +1,3 @@
-// __tests__/selenium/auth-simple.test.js
 import { Builder, Browser, By, until } from "selenium-webdriver";
 import chrome from "selenium-webdriver/chrome";
 
@@ -41,27 +40,23 @@ describe("Simple Clerk Auth", () => {
     await continueBtn1.click();
 
     console.log("4. Waiting for password field");
-    // Wait for the page to update and password field to be available
+
     await driver.wait(until.elementLocated(By.id("password-field")));
 
-    // Small pause to ensure form is ready
     await driver.sleep(1000);
 
     console.log("5. Refinding password field and filling it");
-    // REFIND the element after page transition
+
     const passwordInput = await driver.findElement(By.id("password-field"));
 
-    // Click the field first to focus it
     await passwordInput.click();
 
-    // Clear any existing value
     await passwordInput.clear();
 
-    // Type the password character by character (like a real user)
     await passwordInput.sendKeys("test123@test.com");
 
     console.log("6. Refinding and clicking continue button");
-    // REFIND the continue button after page transition
+
     const continueBtn2 = await driver.findElement(
       By.css("button.cl-formButtonPrimary")
     );
@@ -73,5 +68,5 @@ describe("Simple Clerk Auth", () => {
     const currentUrl = await driver.getCurrentUrl();
     console.log("✅ Success! Current URL:", currentUrl);
     expect(currentUrl).toContain("/dashboard");
-  }, 60000); // Set timeout for this test to 60 seconds
+  }, 60000);
 });

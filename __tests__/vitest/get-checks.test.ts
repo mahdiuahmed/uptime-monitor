@@ -1,9 +1,7 @@
-// tests/get-checks.test.ts
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { GET } from "@/app/api/get-checks/route";
 import { NextRequest } from "next/server";
 
-// Mock Supabase
 const mockEq = vi.fn();
 const mockSelect = vi.fn(() => ({ eq: mockEq }));
 
@@ -23,7 +21,7 @@ describe("GET /api/get-checks", () => {
   });
 
   it("returns empty array if no userId is provided", async () => {
-    const req = new NextRequest("http://localhost/api/get-checks"); // no userId
+    const req = new NextRequest("http://localhost/api/get-checks");
 
     const res = await GET(req);
     const json = await res.json();

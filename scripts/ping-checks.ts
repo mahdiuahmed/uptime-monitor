@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// scripts/ping-checks.ts
-
 import { config } from "dotenv";
-config({ path: ".env.local" }); // ✅ force load .env.local from project root
+config({ path: ".env.local" });
 import got from "got";
 import { createClient } from "@supabase/supabase-js";
 

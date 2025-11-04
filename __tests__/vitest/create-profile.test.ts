@@ -1,14 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// tests/create-profile.test.ts
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { POST } from "@/app/api/create-profile/route";
 
-// Mock Clerk auth
 vi.mock("@clerk/nextjs/server", () => ({
   auth: vi.fn(),
 }));
 
-// Mock Supabase
 const mockUpsert = vi.fn();
 
 vi.mock("@/lib/supabase", () => ({

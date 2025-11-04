@@ -60,7 +60,6 @@ type Check = {
   id: string;
   url: string;
   name: string;
-  // interval_minutes: number;
   status: string;
   last_duration_ms: number;
   last_ping_at: Date;
@@ -102,14 +101,11 @@ export default function DashboardClient({
         userId: user.id,
         name: form.name,
         url: form.url,
-        // interval_minutes: form.interval,
       });
-      // setForm({ name: "", url: "", interval: 10 });
       setForm({ name: "", url: "" });
       const res = await fetch(`/api/get-checks?userId=${user.id}`);
       if (res.ok) {
         toast.success("✅ Check created");
-        //   router.refresh();
       } else {
         toast.error("❌ Failed to create check");
       }
@@ -122,52 +118,6 @@ export default function DashboardClient({
       setLoading(false);
     }
   };
-
-  //   const getStatusVariant = (status: string) => {
-  //     switch (status) {
-  //       case "online":
-  //         return "default";
-  //       case "offline":
-  //         return "destructive";
-  //       default:
-  //         return "secondary";
-  //     }
-  //   };
-
-  //   const getStatusColor = (status: string) => {
-  //     switch (status) {
-  //       case "online":
-  //         return "bg-green-100 text-green-700 hover:bg-green-100";
-  //       case "offline":
-  //         return "bg-red-100 text-red-700 hover:bg-red-100";
-  //       default:
-  //         return "bg-gray-100 text-gray-700 hover:bg-gray-100";
-  //     }
-  //   };
-
-  // Function to delete task
-  // const deleteTask = async (taskId: string) => {
-  //   setIsLoading(true);
-  //   try {
-  //     const remainingTasks = tasks.filter((task) => task._id !== taskId); // Use filter to exclude the task
-
-  //     setTasks(remainingTasks); // Update local state
-
-  //     // Update Firebase with the new task status
-  //     const userId = user?.id;
-  //     if (!userId) {
-  //       throw new Error("User ID is undefined");
-  //     }
-  //     const docRef = doc(db, "Users", userId);
-  //     await updateDoc(docRef, {
-  //       [`taskLists.${selectedTaskList}`]: remainingTasks, // Overwrite the cooking list with updated tasks
-  //     });
-  //   } catch (error) {
-  //     console.error("Error marking task complete: ", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
 
   const response = async (checkId: string) => {
     setLoading(true);
@@ -204,9 +154,6 @@ export default function DashboardClient({
 
   return (
     <>
-      {/* <SidebarProvider> */}
-      {/* <AppSidebar /> */}
-      {/* <SidebarInset> */}
       <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
         <div className="flex items-center gap-2 px-4">
           <SidebarTrigger className="-ml-1" />
@@ -277,21 +224,6 @@ export default function DashboardClient({
                     />
                   </div>
                 </div>
-                {/* <div className="space-y-2">
-                  <Label htmlFor="interval">Check Interval (minutes)</Label>
-                  <Input
-                    id="interval"
-                    type="number"
-                    min={1}
-                    placeholder="10"
-                    value={form.interval}
-                    onChange={(e) =>
-                      setForm({ ...form, interval: Number(e.target.value) })
-                    }
-                    className="w-full md:w-48"
-                    required
-                  />
-                </div> */}
                 <Button type="submit" disabled={loading}>
                   {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                   {loading ? "Adding Check..." : "Add Check"}
@@ -301,7 +233,6 @@ export default function DashboardClient({
           </Card>
 
           {/* <CreateCheckForm /> */}
-
           <div className="space-y-4 mb-12">
             <div className="flex items-center justify-between">
               <h2 className="text-2xl font-bold ">Your Checks</h2>
@@ -338,8 +269,6 @@ export default function DashboardClient({
                       <TableHead>Name</TableHead>
                       <TableHead className="">URL</TableHead>
                       <TableHead className="">Created</TableHead>
-                      {/* <TableHead>Last Checked</TableHead> */}
-                      {/* <TableHead>Response Time</TableHead> */}
                       <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
                   </TableHeader>
@@ -347,8 +276,12 @@ export default function DashboardClient({
                     {filteredChecks.map((check) => (
                       <TableRow
                         key={check.id}
-                        onClick={() => handleCheck(check)}
-                        className="cursor-pointer"
+                        onClick={() =>
+                          check.status !== "unknown" && handleCheck(check)
+                        }
+                        className={`${
+                          check.status !== "unknown" && "cursor-pointer"
+                        }`}
                       >
                         <TableCell>
                           <div className="flex items-center gap-2">
@@ -361,6 +294,7 @@ export default function DashboardClient({
                         <TableCell className="truncate">
                           <Link
                             href={check.url}
+                            target="_blank"
                             className="text-sm text-muted-foreground underline hover:text-foreground"
                             onClick={(e) => e.stopPropagation()}
                           >
@@ -370,23 +304,18 @@ export default function DashboardClient({
                         <TableCell className="text-sm text-muted-foreground truncate">
                           {new Date(check.created_at).toLocaleDateString()}
                         </TableCell>
-                        {/* <TableCell className="text-sm text-muted-foreground truncate">
-                          {check.last_ping_at
-                            ? new Date(check.last_ping_at).toLocaleDateString()
-                            : "Never"}
-                        </TableCell> */}
-                        {/* <TableCell className="text-sm text-muted-foreground">
-                          {check.last_duration_ms ?? "N/A"} ms
-                        </TableCell> */}
                         <TableCell className="text-right">
                           <AlertDialog>
                             <AlertDialogTrigger
                               asChild
                               onClick={(e) => e.stopPropagation()}
                             >
-                              <button className="items-center justify-center p-2 hover:bg-muted rounded-md transition-colors">
-                                <Trash2 size={16} className="text-red-700" />
-                              </button>
+                              <Button
+                                className="items-center justify-center p-2 rounded-md transition-colors"
+                                variant={"destructive"}
+                              >
+                                <Trash2 size={16} className="text-white" />
+                              </Button>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                               <AlertDialogHeader>
@@ -402,7 +331,10 @@ export default function DashboardClient({
                               <AlertDialogFooter>
                                 <AlertDialogCancel>Cancel</AlertDialogCancel>
                                 <AlertDialogAction
-                                  onClick={() => response(check.id)}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    response(check.id);
+                                  }}
                                 >
                                   Continue
                                 </AlertDialogAction>
@@ -419,20 +351,6 @@ export default function DashboardClient({
           </div>
         </div>
       </div>
-      {/* </SidebarInset> */}
-      {/* </SidebarProvider> */}
-      {/* <Image
-        alt="background image of a motherboard circuit"
-        src={bgImg}
-        // placeholder="blur"
-        quality={100}
-        fill
-        // sizes="100vw"
-        style={{
-          objectFit: "cover",
-        }}
-        className="-z-50 hue-rotate-60 opacity-50 blur-sm"
-      /> */}
     </>
   );
 }

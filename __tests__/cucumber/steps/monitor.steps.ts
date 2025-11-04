@@ -19,7 +19,6 @@ Given("I am an authenticated user", function () {
 });
 
 When("I fetch my dashboard data", function () {
-  // Simulates calling /api/get-checks?userId=user_1
   response = mockChecks;
 });
 

@@ -5,17 +5,8 @@ import {
   CardHeader,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-// import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import {
-  // AlertTriangle,
-  Globe,
-  // Pause,
-  // Settings,
-  // TestTube,
-  // Menu,
-  ArrowLeft,
-  LayoutDashboard,
-} from "lucide-react";
+
+import { Globe, ArrowLeft, LayoutDashboard } from "lucide-react";
 
 import Link from "next/link";
 import { supabase } from "@/lib/supabase";
@@ -30,16 +21,6 @@ import {
   BreadcrumbPage,
 } from "@/components/ui/breadcrumb";
 import { ResponseTimeChart } from "./response-time-chart";
-
-// type Check = {
-//   id: string;
-//   url: string;
-//   name: string;
-//   // interval_minutes: number;
-//   status: string;
-//   last_duration_ms: number;
-//   last_ping_at: Date;
-// };
 
 export default async function MonitorPage({
   params,
@@ -63,13 +44,6 @@ export default async function MonitorPage({
     .select("*")
     .eq("check_id", id)
     .order("created_at", { ascending: true });
-
-  const monitorData = {
-    lastChecked: "14 seconds ago",
-    uptime: "25 days 20 hours 42 mins",
-    incidents: 0,
-    checkInterval: "3 minutes",
-  };
 
   return (
     <>
@@ -122,53 +96,17 @@ export default async function MonitorPage({
                 }`}
               ></div>
               <h1 className="text-sm font-semibold truncate">{monitor.name}</h1>
+              <Badge
+                variant="secondary"
+                className={`${
+                  monitor.status === "online"
+                    ? "bg-green-100 text-green-800 border-green-200"
+                    : "bg-red-100 text-red-800 border-red-200"
+                }`}
+              >
+                {monitor.status}
+              </Badge>
             </div>
-            {/* <Sheet>
-              <SheetTrigger asChild>
-                <Button variant="ghost" size="sm" className="h-9 w-9 p-0">
-                  <Menu className="h-4 w-4" />
-                  <span className="sr-only">Open menu</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent side="right" className="w-80">
-                <div className="space-y-4 py-4">
-                  <div className="space-y-3">
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full justify-start h-11 bg-transparent"
-                    >
-                      <TestTube className="h-4 w-4 mr-3" />
-                      Send test alert
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full justify-start h-11 bg-transparent"
-                    >
-                      <AlertTriangle className="h-4 w-4 mr-3" />
-                      Incidents
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full justify-start h-11 bg-transparent"
-                    >
-                      <Pause className="h-4 w-4 mr-3" />
-                      Pause
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      className="w-full justify-start h-11 bg-transparent"
-                    >
-                      <Settings className="h-4 w-4 mr-3" />
-                      Configure
-                    </Button>
-                  </div>
-                </div>
-              </SheetContent>
-            </Sheet> */}
           </div>
         </div>
 
@@ -200,56 +138,8 @@ export default async function MonitorPage({
               >
                 {monitor.status}
               </Badge>
-              {/* <span>Checked every {monitorData.checkInterval}</span> */}
             </div>
           </div>
-
-          {/* Mobile Status Card */}
-          <Card className="lg:hidden">
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between">
-                <div className="space-y-1">
-                  <div className="flex items-center gap-2">
-                    <Badge
-                      variant="secondary"
-                      className="bg-green-100 text-green-800 border-green-200 text-xs"
-                    >
-                      Up
-                    </Badge>
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Checked every {monitorData.checkInterval}
-                  </p>
-                </div>
-                <div className="text-right">
-                  <p className="text-xs text-muted-foreground">Last check</p>
-                  <p className="text-sm font-medium">
-                    {monitorData.lastChecked}
-                  </p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Desktop Action Buttons */}
-          {/* <div className="hidden lg:flex flex-wrap gap-3">
-            <Button variant="outline" size="sm" className="h-9 bg-transparent">
-              <TestTube className="h-4 w-4 mr-2" />
-              Send test alert
-            </Button>
-            <Button variant="outline" size="sm" className="h-9 bg-transparent">
-              <AlertTriangle className="h-4 w-4 mr-2" />
-              Incidents
-            </Button>
-            <Button variant="outline" size="sm" className="h-9 bg-transparent">
-              <Pause className="h-4 w-4 mr-2" />
-              Pause
-            </Button>
-            <Button variant="outline" size="sm" className="h-9 bg-transparent">
-              <Settings className="h-4 w-4 mr-2" />
-              Configure
-            </Button>
-          </div> */}
 
           {/* Stats Cards - Responsive Grid */}
           <div className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
@@ -280,38 +170,11 @@ export default async function MonitorPage({
                 </div>
               </CardContent>
             </Card>
-
-            <Card className="hover:shadow-md transition-shadow sm:col-span-2 lg:col-span-1">
-              <CardHeader className="pb-2 sm:pb-3">
-                <CardDescription className="text-xs sm:text-sm">
-                  Incidents
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="pt-0">
-                <div className="text-lg sm:text-xl lg:text-2xl font-bold text-green-600">
-                  {monitorData.incidents}
-                </div>
-              </CardContent>
-            </Card>
           </div>
 
           {/* Response Times Chart */}
           <Card className="hover:shadow-md transition-shadow">
-            <CardHeader className="">
-              {/* <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-                <div>
-                  <CardTitle className="text-lg sm:text-xl">
-                    Response times
-                  </CardTitle>
-                  <CardDescription className="mt-1">
-                    <div className="flex items-center gap-2 text-xs sm:text-sm">
-                      <Globe className="h-3 w-3 sm:h-4 sm:w-4" />
-                      Europe
-                    </div>
-                  </CardDescription>
-                </div>
-              </div> */}
-            </CardHeader>
+            <CardHeader className=""></CardHeader>
             <CardContent className="">
               {history && history.length > 0 ? (
                 <ResponseTimeChart data={history} />

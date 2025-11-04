@@ -45,5 +45,5 @@ describe("Home Page UI Tests", () => {
 
     const currentUrl = await driver.getCurrentUrl();
     expect(currentUrl).toContain("/sign-in");
-  }, 60000); // Set timeout for this test to 60 seconds
+  }, 60000);
 });
